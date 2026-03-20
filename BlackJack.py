@@ -82,12 +82,12 @@ if Ptotal != 21:
 	if PlayerHand[0] != PlayerHand[1]:
 		choiceSH = int(input("Press 0 to stand\nPress 1 to hit"))
 		print(decisions[choiceSH])
-		#if choiceSH == 0:
+		if choiceSH == 0:
 			#Dealer will check his cards and then hit or stand(I'll do it later)
-		#elif choiceSH == 1:
+		elif choiceSH == 1:
 			#The player will get another card(I'll do later)
-		#else:
-			#print("Choose actual options")
+		else:
+			print("Choose actual options")
 
 
 
