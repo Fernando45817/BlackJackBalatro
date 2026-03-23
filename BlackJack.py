@@ -45,10 +45,15 @@ if "A" in DealerHand:
 	if DealerHand.index("A") == 0 and 10 in DealerHand:
 		Dtotal = 21
 		print("Dealer wins")
-	elif DealerHand.index("A") == 0 and not 10 in DealerHand:
+	elif DealerHand.index("A") == 0 and not (10 or "A") in DealerHand:
 		Dsubtotal = 11
 		Dtotal = Dsubtotal + DealerHand[1]
 		print("Dealer did not have a BlackJack \n You are safe for now")
+	elif DealerHand.index("A") == 0:
+		if DealerHand.index("A") == 1:
+			Dsubtotal = 11
+			Dtotal = 12
+
 else:
 	Dsubtotal = DealerHand[0]
 	Dtotal = sum(DealerHand)
@@ -78,6 +83,7 @@ print("Dealer: ", DealerHand[0], "??", Dsubtotal)
 #Player decisions:
 Win = False
 Lose = False
+next_card = 4
 
 decisions = ["stand", "hit", "double down", "split" ]
 choiceSH = ["stand", "hit"]
@@ -86,12 +92,30 @@ if PlayerHand[0] == PlayerHand[1]:
 	SorH = int(input("Press 0 to stand, 1 to hit, 2 to double down, 3 to split: "))
 	if SorH == 0:
 		#Dealer will continue their actions
+		print(DealerHand)
 		while sum(DealerHand) < 17:
-			DealerHand.append(deck[(c + 2) + c])
+			DealerHand.append(deck[next_card]+1)
+			next_card += 1
+
 		print(DealerHand)
 
-#else:
-	#SorH = int(input("Press 0 to stand, 1 to hit, 2 to double down: "))
+else:
+	SorH = int(input("Press 0 to stand, 1 to hit, 2 to double down: "))
+	if SorH == 0:
+		#Dealer will continue their actions
+		print(DealerHand)
+		while sum(DealerHand) < 17:
+			DealerHand.append(deck[next_card]+1)
+			next_card += 1
+		if sum(DealerHand) > 21:
+			print("Player wins")
+		if sum(DealerHand) > sum(PlayerHand):
+			print("Dealer wins") #Dealer will keep the money of the player (later)
+		elif sum(DealerHand) == sum(PlayerHand):
+			print("Tie, you get back your bets") #Bets will return to the balance (later)
+			print(DealerHand)
+		else:
+			print("Player wins") #The player will receive 2x their bet, since it is the initial bet and the bet that was won
 	#if SorH
 
 
