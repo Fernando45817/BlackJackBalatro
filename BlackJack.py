@@ -20,6 +20,7 @@ print(deck)	#remove this later, it is just to know my deck
 PlayerHand = []
 DealerHand = []
 
+
 for c in range(2):
 	PlayerHand.append(deck[c+c])
 	DealerHand.append(deck[(c+1)+c])
@@ -45,10 +46,12 @@ if "A" in DealerHand:
 		Dtotal = 21
 		print("Dealer wins")
 	elif DealerHand.index("A") == 0 and not 10 in DealerHand:
-		Dtotal = 11
+		Dsubtotal = 11
+		Dtotal = Dsubtotal + DealerHand[1]
 		print("Dealer did not have a BlackJack \n You are safe for now")
 else:
-	Dtotal = DealerHand[0]
+	Dsubtotal = DealerHand[0]
+	Dtotal = sum(DealerHand)
 
 
 #Player's amount:
@@ -70,30 +73,27 @@ else:
 	Ptotal = sum(PlayerHand)
 
 print("Player: ", PlayerHand, "Total: ", Ptotal)
-print("Dealer: ", DealerHand[0], "??")
+print("Dealer: ", DealerHand[0], "??", Dsubtotal)
 
 #Player decisions:
 Win = False
 Lose = False
 
 decisions = ["stand", "hit", "double down", "split" ]
+choiceSH = ["stand", "hit"]
 
-if Ptotal != 21:
-	if PlayerHand[0] != PlayerHand[1]:
-		choiceSH = int(input("Press 0 to stand\nPress 1 to hit"))
-		print(decisions[choiceSH])
-		if choiceSH == 0:
-			#Dealer will check his cards and then hit or stand(I'll do it later)
-		elif choiceSH == 1:
-			#The player will get another card(I'll do later)
-		else:
-			print("Choose actual options")
+if PlayerHand[0] == PlayerHand[1]:
+	SorH = int(input("Press 0 to stand, 1 to hit, 2 to double down, 3 to split: "))
+	if SorH == 0:
+		#Dealer will continue their actions
+		while sum(DealerHand) < 17:
+			DealerHand.append(deck[(c + 2) + c])
+		print(DealerHand)
 
+#else:
+	#SorH = int(input("Press 0 to stand, 1 to hit, 2 to double down: "))
+	#if SorH
 
-
-	print("Make a decision")
-else:
-	print("You win")
 
 
 
