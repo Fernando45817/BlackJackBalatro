@@ -1,0 +1,1 @@
+deck = [] #I don't really have the logic nor the thoughts to do it like this

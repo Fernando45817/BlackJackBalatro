@@ -34,7 +34,7 @@ while not money_process:
 	bets = int(input("Bet some of your balance"))
 	if bets > balance :
 		print("You don't have enough funds")
-	elif bets < 0:
+	elif bets <= 0:
 		print("Bet actual money, dumbass")
 	else:
 		print("Money bet: ", bets)
@@ -42,15 +42,16 @@ while not money_process:
 
 #Dealer's amount or Aces:
 if "A" in DealerHand:
-	if DealerHand.index("A") == 0 and 10 in DealerHand:
+	if DealerHand.index("A") == 0 and DealerHand.index(10) == 1:
 		Dtotal = 21
 		print("Dealer wins")
+	elif DealerHand.index(10) == 0 and DealerHand.index("A") == 1:
+		Dtotal = 21
 	elif DealerHand.index("A") == 0 and not (10 or "A") in DealerHand:
 		Dsubtotal = 11
 		Dtotal = Dsubtotal + DealerHand[1]
 		print("Dealer did not have a BlackJack \n You are safe for now")
-	elif DealerHand.index("A") == 0:
-		if DealerHand.index("A") == 1:
+	elif DealerHand.index("A") == 0 and DealerHand.index("A") == 1:
 			Dsubtotal = 11
 			Dtotal = 12
 
@@ -81,13 +82,13 @@ print("Player: ", PlayerHand, "Total: ", Ptotal)
 print("Dealer: ", DealerHand[0], "??", Dsubtotal)
 
 #Player decisions:
-Win = False
 Lose = False
 next_card = 4
 
 decisions = ["stand", "hit", "double down", "split" ]
 choiceSH = ["stand", "hit"]
 
+# Decisions when the player's whole cards are the same rank as each other.
 if PlayerHand[0] == PlayerHand[1]:
 	SorH = int(input("Press 0 to stand, 1 to hit, 2 to double down, 3 to split: "))
 	if SorH == 0:
@@ -99,24 +100,52 @@ if PlayerHand[0] == PlayerHand[1]:
 
 		print(DealerHand)
 
+# Decisions when the player's whole cards are different.
 else:
-	SorH = int(input("Press 0 to stand, 1 to hit, 2 to double down: "))
-	if SorH == 0:
+	SHDd = int(input("Press 0 to stand, 1 to hit, 2 to double down: "))
+	if SHDd == 0:
 		#Dealer will continue their actions
 		print(DealerHand)
 		while sum(DealerHand) < 17:
-			DealerHand.append(deck[next_card]+1)
+			DealerHand.append(deck[next_card])
 			next_card += 1
+		print(DealerHand)
 		if sum(DealerHand) > 21:
 			print("Player wins")
-		if sum(DealerHand) > sum(PlayerHand):
-			print("Dealer wins") #Dealer will keep the money of the player (later)
+		elif sum(DealerHand) > sum(PlayerHand):
+			if sum(DealerHand) >= 22:
+				print("Player wins")
+			else:
+				print("Dealer wins") #Dealer will keep the money of the player (later)
 		elif sum(DealerHand) == sum(PlayerHand):
 			print("Tie, you get back your bets") #Bets will return to the balance (later)
 			print(DealerHand)
 		else:
 			print("Player wins") #The player will receive 2x their bet, since it is the initial bet and the bet that was won
-	#if SorH
+
+	while SHDd == 1:
+		#Player will receive one extra card.
+		PlayerHand.append(deck[next_card])
+		next_card += 1
+		print(PlayerHand)
+		if sum(PlayerHand) > 21:
+			Lose = True #The lose boolean will be used a little bit later, maybe for more logic
+			print("Dealer wins")
+			break
+		elif sum(PlayerHand) < 21:
+			SHDd1 = int(input("Press 0 to stand, 1 to hit"))
+			if SHDd1 == 0:
+				print(DealerHand)
+
+
+
+
+
+
+
+
+
+
 
 
 
