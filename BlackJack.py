@@ -108,6 +108,13 @@ else:
 		print(DealerHand)
 		while sum(DealerHand) < 17:
 			DealerHand.append(deck[next_card])
+			if deck[next_card] == "A":
+				if sum(DealerHand) <= 10:
+					Dtotal = sum(DealerHand) + 11
+				else:
+					Dtotal = sum(DealerHand) + 1
+			else:
+				
 			next_card += 1
 		print(DealerHand)
 		if sum(DealerHand) > 21:
